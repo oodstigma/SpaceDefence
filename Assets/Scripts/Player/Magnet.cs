@@ -6,54 +6,64 @@ public class Magnet : MonoBehaviour
 
     public GameObject parent;
 
-   private float magnetizeX;
+    private float magnetizeX;
     private float magnetizeY;
+    private float nOffset = -1f;
+    private float pOffset = 1f;
 
-    /*void Start()
-    {
-        parent = GetComponentInParent<GameObject>();
-        Debug.Log(parent.name);
-    }*/
+    private bool[] sides = new bool[] {true, true, true, true};
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        GetPosition(other);
+        GetPosition();
         Debug.Log(magnetizeX.ToString());
         Debug.Log(magnetizeY.ToString());
         other.transform.parent = parent.gameObject.transform;
-        Vector2 newPos = new Vector2(magnetizeX + parent.transform.position.x, magnetizeY + parent.transform.position.y);
-        other.transform.position = newPos;
-       
+        Vector2 newPos = new Vector2(magnetizeX, magnetizeY);
+        other.transform.localPosition = Vector2.zero;
+        other.transform.localPosition = newPos;
+        
+
+
     }
 
-    public void GetPosition(Collider2D other)
+    private void GetPosition()
     {
         Debug.Log("GetPosition");
-        switch (other.name)
-        { 
+        switch (this.name)
+        {
             case "Left":
-                magnetizeX = -1.5f;
+                magnetizeX = nOffset;
                 magnetizeY = 0f;
-                Debug.Log("Left");
-                return;
+                sides[0] = false;
+                Debug.Log("left"); 
+                break;
             case "Down":
                 magnetizeX = 0f;
-                magnetizeY = -1.5f;
+                magnetizeY = nOffset;
                 Debug.Log("down");
-                return;
+                sides[1] = false;
+                break;
             case "Right":
-                magnetizeX = 1.5f;
+                magnetizeX = pOffset;
                 magnetizeY = 0f;
+                sides[2] = false;
                 Debug.Log("right");
-                return;
+                break;
             case "Up":
                 magnetizeX = 0f;
-                magnetizeY = 1.5f;
+                magnetizeY = pOffset;
+                sides[3] = false;
                 Debug.Log("up");
-                return;
+                break;
         }
     }
 
+    private void DisableCollider()
+    {
+
+    }
 }
 
 
