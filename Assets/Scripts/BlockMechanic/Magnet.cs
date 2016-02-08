@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Magnet : MonoBehaviour
 {
-
+    public bool[] sides = new bool[] { true, true, true, true };
     private GameObject parent;
 
     private float magnetizeX;
@@ -11,12 +11,11 @@ public class Magnet : MonoBehaviour
     private float nOffset = -1f;
     private float pOffset = 1f;
 
-    private bool[] sides = new bool[] {true, true, true, true};
+    
 
     void Start()
     {
         parent = gameObject.transform.parent.gameObject.transform.parent.gameObject;
-        Debug.Log(parent.name);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -24,6 +23,8 @@ public class Magnet : MonoBehaviour
         GetPosition();
         SetPosition(other);
         DisableCollider();
+        CreateMagnet WTF = new CreateMagnet();
+        WTF.AttachMag(sides, other);
     }
 
     private void GetPosition()
@@ -35,25 +36,21 @@ public class Magnet : MonoBehaviour
                 magnetizeX = nOffset;
                 magnetizeY = 0f;
                 sides[0] = false;
-                Debug.Log("left"); 
                 break;
             case "Down":
                 magnetizeX = 0f;
                 magnetizeY = nOffset;
-                Debug.Log("down");
                 sides[1] = false;
                 break;
             case "Right":
                 magnetizeX = pOffset;
                 magnetizeY = 0f;
                 sides[2] = false;
-                Debug.Log("right");
                 break;
             case "Up":
                 magnetizeX = 0f;
                 magnetizeY = pOffset;
                 sides[3] = false;
-                Debug.Log("up");
                 break;
         }
     }
@@ -65,8 +62,6 @@ public class Magnet : MonoBehaviour
 
     private void SetPosition(Collider2D other)
     {
-        Debug.Log(magnetizeX.ToString());
-        Debug.Log(magnetizeY.ToString());
         other.transform.parent = parent.gameObject.transform;
         Vector2 newPos = new Vector2(magnetizeX, magnetizeY);
         other.transform.localPosition = Vector2.zero;

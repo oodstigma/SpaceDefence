@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: da5239f0028068746b09f4781c344fac
+timeCreated: 1454911043
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - magnet: {fileID: 125700, guid: a8f9bb4b3c8b2c941b54fcdddc0ee048, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
