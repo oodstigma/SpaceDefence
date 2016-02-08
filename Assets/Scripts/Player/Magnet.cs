@@ -4,7 +4,7 @@ using System.Collections;
 public class Magnet : MonoBehaviour
 {
 
-    public GameObject parent;
+    private GameObject parent;
 
     private float magnetizeX;
     private float magnetizeY;
@@ -13,19 +13,17 @@ public class Magnet : MonoBehaviour
 
     private bool[] sides = new bool[] {true, true, true, true};
 
+    void Start()
+    {
+        parent = gameObject.transform.parent.gameObject.transform.parent.gameObject;
+        Debug.Log(parent.name);
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         GetPosition();
-        Debug.Log(magnetizeX.ToString());
-        Debug.Log(magnetizeY.ToString());
-        other.transform.parent = parent.gameObject.transform;
-        Vector2 newPos = new Vector2(magnetizeX, magnetizeY);
-        other.transform.localPosition = Vector2.zero;
-        other.transform.localPosition = newPos;
-        
-
-
+        SetPosition(other);
+        DisableCollider();
     }
 
     private void GetPosition()
@@ -62,7 +60,17 @@ public class Magnet : MonoBehaviour
 
     private void DisableCollider()
     {
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
 
+    private void SetPosition(Collider2D other)
+    {
+        Debug.Log(magnetizeX.ToString());
+        Debug.Log(magnetizeY.ToString());
+        other.transform.parent = parent.gameObject.transform;
+        Vector2 newPos = new Vector2(magnetizeX, magnetizeY);
+        other.transform.localPosition = Vector2.zero;
+        other.transform.localPosition = newPos;
     }
 }
 
